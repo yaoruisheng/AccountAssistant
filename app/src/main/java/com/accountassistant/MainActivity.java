@@ -4,6 +4,7 @@ import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.Activity;
 import android.content.pm.PackageManager;
+import android.content.ComponentName;
 import android.os.Bundle;
 import android.widget.Toast;
 
