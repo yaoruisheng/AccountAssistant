@@ -102,8 +102,14 @@ public class MainActivity extends Activity {
 
         PackageManager pm = getPackageManager();
 
+        ComponentName componentName =
+                new ComponentName(
+                        getPackageName(),
+                        getPackageName() + ".Launcher"
+                );
+
         pm.setComponentEnabledSetting(
-                getComponentName(),
+                componentName,
                 PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
                 PackageManager.DONT_KILL_APP
         );
