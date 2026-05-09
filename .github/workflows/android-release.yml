@@ -4,15 +4,20 @@ on:
   push:
     tags:
       - "v*"
+
   workflow_dispatch:
+    inputs:
+      tag:
+        description: "Release tag (e.g. v1.0.0)"
+        required: true
 
 permissions:
   contents: write
 
 jobs:
-
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -25,7 +30,7 @@ jobs:
 
       - name: Decode keystore
         run: |
-          echo "${{ vars.KEYSTORE_BASE64 }}" | base64 --decode > ${{ github.workspace }}/accountassistant.jks
+          echo -n "${{ vars.KEYSTORE_BASE64 }}" | base64 --decode > accountassistant.jks
 
       - name: Grant execute permission
         run: chmod +x gradlew
@@ -38,15 +43,10 @@ jobs:
           JKS_PATH: ${{ github.workspace }}/accountassistant.jks
         run: ./gradlew assembleRelease
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: release-apk
-          path: app/build/outputs/apk/release/*.apk
-
-      - name: Create Release
+      - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
+          tag_name: ${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.ref_name }}
           files: app/build/outputs/apk/release/*.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
