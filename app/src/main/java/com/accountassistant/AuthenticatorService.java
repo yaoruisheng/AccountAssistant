@@ -9,13 +9,12 @@ public class AuthenticatorService extends Service {
     private MyAuthenticator authenticator;
 
     @Override
+    public void onCreate() {
+        authenticator = new MyAuthenticator(this);
+    }
+
+    @Override
     public IBinder onBind(Intent intent) {
-
-        if (authenticator == null) {
-
-            authenticator = new MyAuthenticator(this);
-        }
-
         return authenticator.getIBinder();
     }
 }
