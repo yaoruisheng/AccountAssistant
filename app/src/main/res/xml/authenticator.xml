@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<account-authenticator
+    xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:label="@string/ACCOUNT_LABEL"
+
+    android:icon="@android:drawable/sym_def_app_icon"
+
+    android:smallIcon="@android:drawable/sym_def_app_icon"
+
+    android:accountType="com.yahoo.mobile.client.share.account"
+
+    android:accountPreferences="@xml/account_preferences"/>
